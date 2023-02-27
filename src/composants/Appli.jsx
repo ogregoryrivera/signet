@@ -1,6 +1,7 @@
 import './Appli.scss';
 import Entete from './Entete';
 import ListeDossiers from './ListeDossiers';
+import FrmDossier from './FrmDossier';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -10,6 +11,7 @@ export default function Appli() {
         <Entete />
         <section className="contenu-principal">
           <ListeDossiers />
+          <FrmDossier ouvert={false} setOuvert={true}/>
           <Fab size="large" className="ajoutDossier" color="secondary" aria-label="Ajouter dossier">
             <AddIcon />
           </Fab>
