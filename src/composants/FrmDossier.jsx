@@ -5,8 +5,15 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import { TwitterPicker } from 'react-color';
+import { useState } from 'react';
 
 export default function FrmDossier({ouvert, setOuvert}) {
+	const [titre, setTitre] = useState('');	
+	const [couverture, setCouverture] = useState('');
+	const [couleur, setCouleur] = useState('');
+
+	console.log("Le titre dans le formulaire : ", titre);
 
   function gererFermer() {
     setOuvert(false);
@@ -25,6 +32,7 @@ export default function FrmDossier({ouvert, setOuvert}) {
             type="text"
             fullWidth
             variant="standard"
+						onChange={evt => setTitre(evt.target.value)}
           />
           <TextField
             margin="dense"
@@ -33,7 +41,15 @@ export default function FrmDossier({ouvert, setOuvert}) {
             type="url"
             fullWidth
             variant="standard"
+						onChange={evt => setCouverture(evt.target.value)}
           />
+					<TwitterPicker 
+						triangle='hide'
+						width='auto'
+						color={'#ff0000'}
+						colors={['#0f0', '#00f', '#036', '#960']}
+						onChangeComplete={evt=>setCouleur(evt.target.color)}
+					/>
         </DialogContent>
         <DialogActions>
           <Button onClick={gererFermer}>Annuler</Button>
