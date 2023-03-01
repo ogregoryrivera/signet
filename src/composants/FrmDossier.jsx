@@ -8,11 +8,30 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { TwitterPicker } from 'react-color';
 import { useState } from 'react';
 
-export default function FrmDossier({ouvert, setOuvert}) {
+export default function FrmDossier({ouvert, setOuvert, actionDossier}) {
+
+  const[titre, setTitre] = useState('');
+  const[couverture, setCouverture] = useState('');
+  const[couleur, setCouleur] = useState('#000');
+
+  console.log("le titre: ", titre);
+  console.log("La couverture:", couverture);
+  console.log("La coueleur:", couleur);
 
   function gererFermer() {
+    setTitre;
+    setCouverture;
+    setCouleur;
     setOuvert(false);
   };
+
+  function gererActionDossier(){
+    let date = new Date();
+    let id = 'ds_' + date.getTime() + Math.random();
+    actionDossier(id, titre, couverture, couleur, date.toJSON());
+
+    gererFermer();
+  }
 
   return (
     <div className='FrmDossier'>
@@ -27,6 +46,7 @@ export default function FrmDossier({ouvert, setOuvert}) {
             type="text"
             fullWidth
             variant="standard"
+            onChange={evt => setTitre(evt.target.value)}
           />
           <TextField
             margin="dense"
@@ -35,11 +55,19 @@ export default function FrmDossier({ouvert, setOuvert}) {
             type="url"
             fullWidth
             variant="standard"
+            onChange={evt => setCouverture(evt.target.value)}
+          />
+          <TwitterPicker 
+          triangle='hide'
+          width='auto'
+          color={'#ff0000'}
+          colors={['#0f0', '#00f']}
+          onChangeComplete={clr=>setCouleur(clr.hex)}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={gererFermer}>Annuler</Button>
-          <Button onClick={gererFermer}>Soumettre</Button>
+          <Button onClick={gererActionDossier}>Soumettre</Button>
         </DialogActions>
       </Dialog>
     </div>
