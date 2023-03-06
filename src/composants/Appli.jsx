@@ -38,14 +38,14 @@ export default function Appli() {
     , [dossiers]
   );
 
-  function ajouterDossier(id, titre, couverture, couleur, date){ 
+  function ajouterDossier(id, titre, couverture, couleur, timestamp){ 
     setDossiers([...dossiers,
       {
         id:id,
         titre:titre,
         couverture:couverture,
         couleur:couleur,
-        dateModif:date
+        dateModif:timestamp
       }
     ])
   }
