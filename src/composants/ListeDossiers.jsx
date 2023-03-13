@@ -1,5 +1,7 @@
 import './ListeDossiers.scss';
 import Dossier from './Dossier';
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
 
 export default function ListeDossiers({dossiers,setDossiers}) {
 
