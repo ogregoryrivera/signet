@@ -5,6 +5,9 @@ import FrmDossier from './FrmDossier';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from 'react';
+import { initializeApp } from 'firebase/app';
+import { collection, doc, getFirestore, setDoc } from 'firebase/firestore';
+import firebaseConfig from '../code/fb-config';
 
 export default function Appli() {
   const [frmDossierOuvert, setFrmDossierOuvert] = useState(false);
@@ -29,16 +32,27 @@ export default function Appli() {
   ] 
   
   */
-  const [dossiers, setDossiers] = useState(
+  const [dossiers, setDossiers] = useState([]);
+
+  /*const [dossiers, setDossiers] = useState(
     () => JSON.parse(localStorage.getItem('4pa-dossiers')) || []
-  );
+  );*/
 
   useEffect(
     () => localStorage.setItem('4pa-dossiers', JSON.stringify(dossiers))
     , [dossiers]
   );
 
-  function ajouterDossier(id, titre, couverture, couleur, timestamp){ 
+  function ajouterDossier(id, titre, couverture, couleur, dateModif){ 
+    const app = initializeApp(firebaseConfig);
+    const bd = getFirestore(app);
+    const idDossier = doc(collection(bd, 'dossiers'));
+    const dossierData = {titre, couverture, couleur, dateModif};
+    setDoc(idDossier, dossierData).then(
+      () => setDossiers([...dossiers, {id:idDossier, ...dossierData}])
+    );
+    }
+
     setDossiers([...dossiers,
       {
         id:id,
@@ -62,4 +76,4 @@ export default function Appli() {
         </section>
     </div>
   );
-}
+ }

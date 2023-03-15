@@ -28,8 +28,8 @@ export default function FrmDossier({ouvert, setOuvert, actionDossier, id_p=null,
   function gererActionDossier(){
     let timestamp = new Date().getTime();
     //On ajoute un id unique
-    let id = (!id_p) ? crypto.randomUUID() : id_p;
-    actionDossier(id, titre, couverture, couleur, timestamp);
+    //let id = (!id_p) ? crypto.randomUUID() : id_p;
+    actionDossier(titre, couverture, couleur, timestamp);
 
     gererFermer();
   }
