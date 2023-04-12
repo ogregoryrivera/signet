@@ -3,33 +3,25 @@ import Dossier from './Dossier';
 import { initializeApp } from 'firebase/app';
 import { collection,doc,getDocs, getFirestore, onSnapshot } from 'firebase/firestore';
 import { useEffect } from 'react';
-import firebaseConfig from '../code/fb-config';
+import { lireTout } from '../code/dossier-modele';
 
 
-export default function ListeDossiers({dossiers,setDossiers}) {
 
-  function observerDossier(){
-    const app = initializeApp(firebaseConfig);
-    const bd = getFirestore(app);
-    onSnapshot(collection(bd, 'dossiers'), 
-      resultat => setDossiers(resultat.docs.map(
-        doc => ({id: doc.id, ...doc.data()})
-      ))
-    );
-  }
+export default function ListeDossiers({dossiers,setDossiers,utilisateur}) {
 
-  function chercherDossier(){
-    const app = initializeApp(firebaseConfig);
-    const bd = getFirestore(app);
-    const dossierFS = getDocs(collection(bd, 'dossiers')).then(
-      resultat => setDossiers(resultat.docs.map(
-        doc => ({id: doc.id, ...doc.data()})
-      ))
-    )
-    
-  }
+  
 
-  useEffect(observerDossier, []);
+  useEffect(()=> {
+    async function chercherDossiers() {
+      const dossierFS = await lireTout(utilisateur.uid)
+      setDossiers(dossierFS.map(
+          doc => ({id: doc.id, ...doc.data()})
+        ));
+      
+    }
+    chercherDossiers();
+  }, []);
+  
 
   /**
    * Supprime un dossier de la collection
